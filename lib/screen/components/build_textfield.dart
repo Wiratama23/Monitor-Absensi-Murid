@@ -19,23 +19,11 @@ class BuildTextField extends StatelessWidget {
       obscureText: obsecureText,
       decoration: InputDecoration(
         suffixIcon: obsecureText ? const Icon(Icons.remove_red_eye) : const Icon(Icons.person),
-        // focusedBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(15),
-        //   borderSide: const BorderSide(color: Colors.greenAccent),
-        // ),
-        // enabledBorder: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(15),
-        //   borderSide: const BorderSide(color: Colors.blueAccent),
-        // ),
-        // border: InputBorder.none,
         hintText: hintText,
         hintStyle: const TextStyle(
           color: Colors.grey,
           fontSize: 14.5
         ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 12
-        )
       ),
     );
   }
