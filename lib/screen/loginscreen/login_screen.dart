@@ -1,3 +1,4 @@
+import 'package:absensi_sd/screen/components/build_button.dart';
 import 'package:absensi_sd/screen/components/build_textfield.dart';
 import 'package:absensi_sd/screen/loginscreen/controller.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,7 @@ class LoginScreen extends GetView<LoginController> {
         const SizedBox(height: 60),
         const Text("Student ID"),
         BuildTextField(
-          hintText: "kick",
+          hintText: "id",
           controller: controller.id,
         ),
         const SizedBox(height: 40),
@@ -93,6 +94,13 @@ class LoginScreen extends GetView<LoginController> {
           hintText: "pass",
           obsecureText: controller.isSecure,
           controller: controller.pass,
+        ),
+        const SizedBox(height: 40),
+        BuildButton(
+            text: "Login",
+            onPressed: (){
+              debugPrint("Login Clicked");
+            }
         ),
       ],
     );
