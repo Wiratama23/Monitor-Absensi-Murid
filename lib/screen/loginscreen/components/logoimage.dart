@@ -13,19 +13,27 @@ class LogoImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: controller.mediaSize.width,
-      child: const Column(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(
-            Icons.location_on_sharp,
-            size: 100,
-            color: Colors.blue,
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0,left: 8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: SizedBox(
+                  height: 150,
+                  width: 150,
+                  child: Image.asset("assets/kemendikbud.png", fit: BoxFit.fill)
+              ),
+            ),
           ),
-          Text(
-            "data",
+          const Text(
+            "SDN 2 Beji Kota Batu",
             style: TextStyle(
                 color: Colors.blueAccent,
-                fontSize: 40,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
                 letterSpacing: 2
             ),

@@ -9,12 +9,16 @@ class Routes {
     GetPage(
       name: Names.pageLogin,
       page: () => const LoginScreen(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(seconds: 1),
       binding: BindingsBuilder(() {
         Get.put(LoginController());
       })
     ),
     GetPage(
         name: Names.pageDashboard,
+        transition: Transition.circularReveal,
+        transitionDuration: const Duration(seconds: 1),
         page: () => const DashboardSiswa(),
         // binding: BindingsBuilder(() {
         //   Get.put(LoginController());
