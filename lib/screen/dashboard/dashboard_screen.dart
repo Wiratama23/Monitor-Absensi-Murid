@@ -44,12 +44,13 @@ class DashboardSiswa extends StatelessWidget {
                   scrollDirection: Axis.vertical,
                   itemCount: presensi.length,
                   itemBuilder: (context, index) {
+                    final String status = presensi[index]["status"].toString();
                     return BuildTile(
-                      title: presensi[index]["date"].toString(),
-                      subtitle: presensi[index]["day"].toString(),
-                      trailing: presensi[index]["status"],
-                      leading: buildLeadingIcon(presensi[index]["status"]),
-                      color: genColor(presensi[index]["status"]),
+                      title: presensi[index]["day"].toString(),
+                      subtitle: presensi[index]["date"],
+                      trailing: status,
+                      leading: buildLeadingIcon(status),
+                      color: genColor(status),
                     );
                   }),
             ),
