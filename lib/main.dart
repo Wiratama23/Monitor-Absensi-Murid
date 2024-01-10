@@ -17,7 +17,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       title: 'Absensi App',
       home: const CircularProgressIndicator(),
-      initialRoute: Names.pageLogin,
+      initialRoute: Names.pageDashboard,
       getPages: Routes.pages,
       debugShowCheckedModeBanner: false,
     );
