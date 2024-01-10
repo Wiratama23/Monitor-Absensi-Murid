@@ -13,7 +13,5 @@ class Dummy {
     {"date": "11-27-2021", "day": "Rabu", "status": "Tidak Hadir"},
     {"date": "11-28-2021", "day": "Kamis", "status": "Tidak Hadir"},
     {"date": "11-29-2021", "day": "Jumat", "status": "Hadir"},
-
-    // Add other attendance data as needed
   ];
 }
