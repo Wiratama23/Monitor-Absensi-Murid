@@ -1,8 +1,13 @@
+import 'package:absensi_sd/dummyData.dart';
 import 'package:absensi_sd/screen/globalcomponents/build_tile.dart';
 import 'package:flutter/material.dart';
 
 class DashboardSiswa extends StatelessWidget {
   const DashboardSiswa({super.key});
+  static const String _nama = Dummy.nama;
+  static const String _kelas = Dummy.kelas;
+  static const String _nis = Dummy.nis;
+  static const List<Map<String, String>> presensi = Dummy.presensi;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +27,9 @@ class DashboardSiswa extends StatelessWidget {
                   ),
                   const Column(
                     children: [
-                      Text("suka2 idCard"),
+                      Text("Nama : " + _nama),
                       SizedBox(height: 10),
-                      Text("suka2 idCard"),
+                      Text("Kelas : " + _kelas),
                     ],
                   )
                 ],
@@ -36,16 +41,32 @@ class DashboardSiswa extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return BuildTile();
-                }
-              ),
+                  scrollDirection: Axis.vertical,
+                  itemCount: presensi.length,
+                  itemBuilder: (context, index) {
+                    return BuildTile(
+                      title: presensi[index]["date"].toString(),
+                      subtitle: presensi[index]["day"].toString(),
+                      trailing: presensi[index]["status"],
+                      leading: buildLeadingIcon(presensi[index]["status"]),
+                      color: genColor(presensi[index]["status"]),
+                    );
+                  }),
             ),
           )
         ],
       ),
     );
+  }
+
+  Widget buildLeadingIcon(String? status) {
+    return Icon(
+      status == "Hadir" ? Icons.check_box : Icons.check_box_outline_blank,
+      color: status == "Hadir" ? Colors.green : Colors.red,
+    );
+  }
+
+  Color genColor(String? status) {
+    return status == "Hadir" ? Colors.tealAccent : Colors.orange;
   }
 }

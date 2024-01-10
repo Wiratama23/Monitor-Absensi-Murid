@@ -2,21 +2,32 @@ import 'package:flutter/material.dart';
 
 class BuildTile extends StatelessWidget {
   const BuildTile({
-    super.key,
-  });
+    Key? key,
+    required this.title,
+    this.trailing,
+    this.leading,
+    this.color,
+    this.subtitle,
+  }) : super(key: key);
+
+  final String title;
+  final String? trailing;
+  final Widget? leading;
+  final Color? color;
+  final String? subtitle;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.tealAccent,
+      color: color,
       child: Container(
         height: 80,
-        child: const Center(
+        child: Center(
           child: ListTile(
-            leading: Icon(Icons.check_box, color: Colors.green),
-            trailing: Text("Absent"),
-            title: Text("Jadwal"),
-            // tileColor: Colors.deepOrangeAccent,
+            leading: leading,
+            trailing: Text(trailing ?? ""),
+            title: Text(title ?? ""),
+            subtitle: Text(subtitle ?? ""),
           ),
         ),
       ),
