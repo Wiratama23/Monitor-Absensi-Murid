@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const App());
 }
 
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Absensi App',
-      // home: const CircularProgressIndicator(),
+      home: const CircularProgressIndicator(),
       // initialRoute: Names.pageLogin,
       initialRoute: Names.dashboard,
       getPages: Routes.pages,
