@@ -7,6 +7,7 @@ import 'package:absensi_sd/screen/globalcomponents/build_button.dart';
 import 'package:absensi_sd/screen/globalcomponents/build_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math' as math;
 
 import 'controller.dart';
 
@@ -33,11 +34,16 @@ class DashboardSiswa extends StatelessWidget {
               child: GestureDetector(
                 onTap: (){
                   Get.toNamed(Names.pageLogin);
+                  //adding logout function.........
                 },
-                child: const SizedBox(
+                child: SizedBox(
                   width: 50,
                   height: 20,
-                  child: Icon(Icons.arrow_back_ios),
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(math.pi),
+                    child: const Icon(Icons.logout),
+                  )
                 ),
               ),
             ),
