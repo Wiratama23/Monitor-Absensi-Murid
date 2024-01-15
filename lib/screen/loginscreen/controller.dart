@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:http/http.dart' as http;
 
 class LoginController extends GetxController {
@@ -28,7 +27,8 @@ class LoginController extends GetxController {
 
     var jsonResponse = jsonDecode(response.body);
     if(jsonResponse['status'] == 200){
-      print(jsonResponse);
+      var token = jsonResponse['token'].toString();
+      print("Token : $token");
     } else {
       print(jsonResponse);
     }
