@@ -33,8 +33,8 @@ class DashboardSiswa extends StatelessWidget {
               padding: const EdgeInsets.only(left: 16.0,top: 8.0),
               child: GestureDetector(
                 onTap: (){
-                  Get.toNamed(Names.pageLogin);
                   //adding logout function.........
+                  Get.toNamed(Names.pageLogin);
                 },
                 child: SizedBox(
                   width: 50,
