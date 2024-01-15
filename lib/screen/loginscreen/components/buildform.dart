@@ -48,7 +48,6 @@ class BuildForm extends StatelessWidget {
         BuildButton(
             text: "Login",
             onPressed: (){
-              Get.offAndToNamed(Names.pageDashboard);
               controller.Login(controller.id.text, controller.pass.text);
             }
         ),

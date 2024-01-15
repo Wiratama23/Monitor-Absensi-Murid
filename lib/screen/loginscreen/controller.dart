@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
+import '../../routes/routes_name.dart';
+
 class LoginController extends GetxController {
   TextEditingController id = TextEditingController();
   TextEditingController pass = TextEditingController();
@@ -29,6 +31,7 @@ class LoginController extends GetxController {
     if(jsonResponse['status'] == 200){
       var token = jsonResponse['token'].toString();
       print("Token : $token");
+      Get.offAndToNamed(Names.pageDashboard);
     } else {
       print(jsonResponse);
     }
