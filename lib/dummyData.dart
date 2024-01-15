@@ -2,6 +2,7 @@ class Dummy {
   static const nama = "Muhammad";
   static const nis = "123465789";
   static const kelas = "5";
+  static const image = "assets/OIP.jpeg";
   static const List<Map<String, String>> presensi = [
     {"date": "11-20-2021", "day": "Senin", "status": "Hadir"},
     {"date": "11-21-2021", "day": "Selasa", "status": "Hadir"},

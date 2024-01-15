@@ -6,11 +6,14 @@ import 'package:absensi_sd/screen/globalcomponents/build_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'controller.dart';
+
 class DashboardSiswa extends StatelessWidget {
   const DashboardSiswa({super.key});
   static const String _nama = Dummy.nama;
   static const String _kelas = Dummy.kelas;
   static const String _nis = Dummy.nis;
+  static const String _images = Dummy.image;
   static const List<Map<String, String>> presensi = Dummy.presensi;
 
   @override
@@ -53,7 +56,7 @@ class DashboardSiswa extends StatelessWidget {
                         child: SizedBox(
                             height: 150,
                             width: 150,
-                            child: Image.asset("assets/OIP.jpeg", fit: BoxFit.fill)
+                            child: Image.asset(_images, fit: BoxFit.fill)
                         ),
                       ),
                     ),
@@ -96,14 +99,5 @@ class DashboardSiswa extends StatelessWidget {
     );
   }
 
-  Widget buildLeadingIcon(String? status) {
-    return Icon(
-      status == "Hadir" ? Icons.check_box : Icons.check_box_outline_blank,
-      color: status == "Hadir" ? Colors.green : Colors.red,
-    );
-  }
 
-  Color genColor(String? status) {
-    return status == "Hadir" ? Colors.tealAccent : Colors.orange;
-  }
 }
