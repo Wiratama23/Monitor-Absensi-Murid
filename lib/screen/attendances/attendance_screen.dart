@@ -1,6 +1,7 @@
 import 'package:absensi_sd/dummyData.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
 import 'package:absensi_sd/screen/attendances/components/attendance.dart';
+import 'package:absensi_sd/screen/attendances/constants.dart';
 import 'package:absensi_sd/screen/attendances/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,7 +43,46 @@ class AttendanceSiswa extends GetView<AttendanceController> {
               ),
             ),
             const SizedBox(height: 40),
-            Center(child: Text("Januari 2024", style: TextStyle(fontSize: 40))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              child: Center(
+                child: Obx(
+                    ()=> DropdownButton(
+                        value: controller.currentMonth,
+                        items: controller.months.map((String month) {
+                                return DropdownMenuItem<String>(
+                                value: month,
+                                child: Text(month, style: const TextStyle(fontSize: 25)));
+                        }).toList(),
+                        icon: const Icon(Icons.calendar_month),
+                        onChanged: (String? newVal){
+                          controller.currentMonthIndex.value = controller.months.indexOf(newVal!);
+                        }
+                    ),
+                    //     DropdownDatePicker(
+                    //     inputDecoration: InputDecoration(
+                    //         enabledBorder: const OutlineInputBorder(
+                    //           borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    //         ),
+                    //         border: OutlineInputBorder(
+                    //             borderRadius: BorderRadius.circular(10))), // optional
+                    //     isDropdownHideUnderline: true, // optional
+                    //     startYear: 2023, // optional
+                    //     endYear: 2025, // optional
+                    //     width: 10, // optional
+                    //     selectedMonth: controller.month!.value, // optional
+                    //     selectedYear: controller.year!.value, // optional
+                    //     onChangedMonth: (value) => {
+                    //
+                    //       controller.onChangedMonth(int.parse(value!))
+                    //     },
+                    //     onChangedYear: (value) => controller.onChangedYear(int.parse(value!)),
+                    //     showDay: false,
+                    //     locale: "en"
+                    // ),
+                ),
+              ),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
@@ -50,42 +90,26 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.decrementMonth();
+                        // print(controller.month.value);
+                      },
                       child: const Text("Previous"),
                     ),
                   ),
                   const SizedBox(width: 15),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.incrementMonth();
+                      },
                       child: const Text("Next"),
                     ),
                   )
                 ],
               ),
             ),
-            DropdownButton<String>(
-                // value: controller.dropdownVal.value,
-                value: "januari",
-                icon: const Icon(Icons.calendar_month),
-                items: const [
-                  DropdownMenuItem<String>(
-                      value: "januari", child: Text("Januari")),
-                  DropdownMenuItem<String>(
-                      value: "februari", child: Text("Februari")),
-                  DropdownMenuItem<String>(
-                      value: "maret", child: Text("Maret")),
-                ],
-                onChanged: (String? newVal) {
-                  controller.onChanged(newVal);
-                }),
-            // const Profile(
-            //     name: _nama,
-            //     kelas: _kelas,
-            //     image: _images,
-            //     nis: _nis),
-            // const SizedBox(height: 2),
-            const Attendance(data: presensi),
+            Attendance(data: presensi),
           ],
         ),
       ),

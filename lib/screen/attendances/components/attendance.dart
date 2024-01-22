@@ -4,12 +4,13 @@ import '../../globalcomponents/build_tile.dart';
 import '../controller.dart';
 
 class Attendance extends StatelessWidget{
-  const Attendance({
+  Attendance({
     Key? key,
     required this.data,
   }):super(key:key);
 
   final List<Map<String, String>> data;
+  final AttendanceController controller = AttendanceController();
 
   @override
   Widget build(BuildContext context){
@@ -25,8 +26,8 @@ class Attendance extends StatelessWidget{
                 title: data[index]["day"].toString(),
                 subtitle: data[index]["date"],
                 trailing: status,
-                leading: buildLeadingIcon(status),
-                color: genColor(status),
+                leading: controller.buildLeadingIcon(status),
+                color: controller.genColor(status),
               );
             }),
       ),
