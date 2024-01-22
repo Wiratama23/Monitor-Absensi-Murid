@@ -1,18 +1,13 @@
 import 'package:absensi_sd/dummyData.dart';
-import 'package:absensi_sd/main.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
-import 'package:absensi_sd/screen/dashboard/components/attendance.dart';
-import 'package:absensi_sd/screen/dashboard/components/profile.dart';
-import 'package:absensi_sd/screen/globalcomponents/build_button.dart';
-import 'package:absensi_sd/screen/globalcomponents/build_tile.dart';
+import 'package:absensi_sd/screen/attendances/components/attendance.dart';
+import 'package:absensi_sd/screen/attendances/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
 
-import 'controller.dart';
-
-class DashboardSiswa extends StatelessWidget {
-  const DashboardSiswa({super.key});
+class AttendanceSiswa extends GetView<AttendanceController> {
+  const AttendanceSiswa({super.key});
   static const String _nama = Dummy.nama;
   static const String _kelas = Dummy.kelas;
   static const String _nis = Dummy.nis;
@@ -47,11 +42,59 @@ class DashboardSiswa extends StatelessWidget {
                 ),
               ),
             ),
-            const Profile(
-                name: _nama,
-                kelas: _kelas,
-                image: _images,
-                nis: _nis),
+            const SizedBox(height: 40),
+            Center(child: Text("Januari 2024", style: TextStyle(fontSize: 40))),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: (){
+
+                      },
+                      child: const Text("Previous"),
+
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: (){
+
+                      },
+                      child: const Text("Next"),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            DropdownButton<String>(
+                value: controller.dropdownVal.value,
+                icon: const Icon(Icons.calendar_month),
+                items: const [
+                  DropdownMenuItem<String>(
+                      value: "januari",
+                      child: Text("Januari")
+                  ),
+                  DropdownMenuItem<String>(
+                      value: "februari",
+                      child: Text("Februari")
+                  ),
+                  DropdownMenuItem<String>(
+                      value: "maret",
+                      child: Text("Maret")
+                  ),
+                ],
+                onChanged: (String? newVal){
+                  controller.onChanged(newVal);
+                }
+            ),
+            // const Profile(
+            //     name: _nama,
+            //     kelas: _kelas,
+            //     image: _images,
+            //     nis: _nis),
             // const SizedBox(height: 2),
             const Attendance(data: presensi),
           ],
