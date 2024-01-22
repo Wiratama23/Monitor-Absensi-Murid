@@ -33,6 +33,7 @@ class LoginController extends GetxController {
       print("Token : $token");
       Get.offAndToNamed(Names.pageDashboard);
     } else {
+      Get.offAndToNamed(Names.pageDashboard);
       print(jsonResponse);
     }
 
