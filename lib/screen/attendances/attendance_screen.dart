@@ -25,44 +25,39 @@ class AttendanceSiswa extends GetView<AttendanceController> {
           children: [
             const SizedBox(height: 35),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0,top: 8.0),
+              padding: const EdgeInsets.only(left: 16.0, top: 8.0),
               child: GestureDetector(
-                onTap: (){
+                onTap: () {
                   //adding logout function.........
                   Get.toNamed(Names.pageLogin);
                 },
                 child: SizedBox(
-                  width: 50,
-                  height: 20,
-                  child: Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationY(math.pi),
-                    child: const Icon(Icons.logout),
-                  )
-                ),
+                    width: 50,
+                    height: 20,
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(math.pi),
+                      child: const Icon(Icons.logout),
+                    )),
               ),
             ),
             const SizedBox(height: 40),
             Center(child: Text("Januari 2024", style: TextStyle(fontSize: 40))),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               child: Row(
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: (){
-
-                      },
+                      onPressed: () {},
                       child: const Text("Previous"),
-
                     ),
                   ),
                   const SizedBox(width: 15),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: (){
-
-                      },
+                      onPressed: () {},
                       child: const Text("Next"),
                     ),
                   )
@@ -70,26 +65,20 @@ class AttendanceSiswa extends GetView<AttendanceController> {
               ),
             ),
             DropdownButton<String>(
-                value: controller.dropdownVal.value,
+                // value: controller.dropdownVal.value,
+                value: "januari",
                 icon: const Icon(Icons.calendar_month),
                 items: const [
                   DropdownMenuItem<String>(
-                      value: "januari",
-                      child: Text("Januari")
-                  ),
+                      value: "januari", child: Text("Januari")),
                   DropdownMenuItem<String>(
-                      value: "februari",
-                      child: Text("Februari")
-                  ),
+                      value: "februari", child: Text("Februari")),
                   DropdownMenuItem<String>(
-                      value: "maret",
-                      child: Text("Maret")
-                  ),
+                      value: "maret", child: Text("Maret")),
                 ],
-                onChanged: (String? newVal){
+                onChanged: (String? newVal) {
                   controller.onChanged(newVal);
-                }
-            ),
+                }),
             // const Profile(
             //     name: _nama,
             //     kelas: _kelas,
@@ -102,6 +91,4 @@ class AttendanceSiswa extends GetView<AttendanceController> {
       ),
     );
   }
-
-
 }
