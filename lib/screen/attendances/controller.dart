@@ -2,10 +2,13 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AttendanceController extends GetxController {
-  final RxInt currentMonthIndex = 5.obs;
-  final RxInt currentYear = 2030.obs;
+  // final RxInt currentMonthIndex = 5.obs;
+  // final RxInt currentYear = 2030.obs;
+  final RxInt currentMonthIndex = (DateTime.now().month - 1).obs;
+  final RxInt currentYear = DateTime.now().year.obs;
   List<int> years = [];
 
   // List of months
