@@ -30,16 +30,13 @@ class AttendanceSiswa extends GetView<AttendanceController> {
               child: GestureDetector(
                 onTap: () {
                   //adding logout function.........
-                  Get.toNamed(Names.pageLogin);
+                  Get.toNamed(Names.pageDashboard);
                 },
                 child: SizedBox(
                     width: 50,
                     height: 20,
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(math.pi),
-                      child: const Icon(Icons.logout),
-                    )),
+                    child:  const Icon(Icons.arrow_back_ios),
+                    ),
               ),
             ),
             const SizedBox(height: 40),
