@@ -45,15 +45,13 @@ class AttendanceController extends GetxController {
 
   AttendanceController() {
     years = genYears(currentYear);
-
   }
 
   void incrementMonth() {
     if (currentMonthIndex.value < months.length - 1) {
       currentMonthIndex.value++;
-    } else if (currentMonthIndex.value > months.length - 1) {
+    } else if (currentMonthIndex.value >= months.length - 1) {
       currentYear.value++;
-      // currentYearIndex.value++;
       currentMonthIndex.value = 0;
     }
   }
@@ -61,24 +59,11 @@ class AttendanceController extends GetxController {
   void decrementMonth() {
     if (currentMonthIndex.value > 0) {
       currentMonthIndex.value--;
-    } else if (currentMonthIndex.value < 0) {
+    } else if (currentMonthIndex.value <= 0) {
       currentYear.value--;
-      // currentYearIndex.value--;
       currentMonthIndex.value = months.length - 1;
     }
   }
-
-  // void incrementYear() {
-  //   if (currentYearIndex.value < years.length - 1) {
-  //     currentYearIndex.value++;
-  //   }
-  // }
-
-  // void decrementYear() {
-  //   if (currentYearIndex.value > 0) {
-  //     currentYearIndex.value--;
-  //   }
-  // }
 
   Widget buildLeadingIcon(String? status) {
     return Icon(
