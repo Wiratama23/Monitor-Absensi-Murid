@@ -26,10 +26,17 @@ class AttendanceController extends GetxController {
     "November",
     "Desember"
   ];
+  List<String> days = [
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "kamis",
+    "Jumat",
+    "Sabtu",
+    "Minggu"
+  ];
 
   String get currentMonth => months[currentMonthIndex.value];
-  // int get selectedYear => selectedYear;
-  // int get currentYear => years[currentYearIndex.value];
 
   List<int> genYears(RxInt currentYear) {
     List<int> years = [];
@@ -50,7 +57,7 @@ class AttendanceController extends GetxController {
   void incrementMonth() {
     if (currentMonthIndex.value < months.length - 1) {
       currentMonthIndex.value++;
-    } else if (currentMonthIndex.value >= months.length - 1) {
+    } else if (currentMonthIndex.value >= months.length - 1 && currentYear < years.last) {
       currentYear.value++;
       currentMonthIndex.value = 0;
     }
@@ -59,7 +66,7 @@ class AttendanceController extends GetxController {
   void decrementMonth() {
     if (currentMonthIndex.value > 0) {
       currentMonthIndex.value--;
-    } else if (currentMonthIndex.value <= 0) {
+    } else if (currentMonthIndex.value <= 0 && currentYear > years.first) {
       currentYear.value--;
       currentMonthIndex.value = months.length - 1;
     }
