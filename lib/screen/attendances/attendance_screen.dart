@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:absensi_sd/dummyData.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
 import 'package:absensi_sd/screen/attendances/components/attendance.dart';
-import 'package:absensi_sd/screen/attendances/constants.dart';
 import 'package:absensi_sd/screen/attendances/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,8 +48,11 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
               child: Center(
                 child: Obx(
-                  () => Row(children: [
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
                     DropdownButton(
+                      alignment: Alignment.center,
                         value: controller.currentMonth,
                         items: controller.months.map((String month) {
                           return DropdownMenuItem<String>(
@@ -58,7 +60,7 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                               child: Text(month,
                                   style: const TextStyle(fontSize: 25)));
                         }).toList(),
-                        icon: const Icon(Icons.calendar_month),
+                        // icon: const Icon(Icons.calendar_month),
                         onChanged: (String? newVal) {
                           controller.currentMonthIndex.value =
                               controller.months.indexOf(newVal!);
