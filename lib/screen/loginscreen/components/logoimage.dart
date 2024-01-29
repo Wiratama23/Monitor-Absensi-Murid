@@ -25,7 +25,7 @@ class LogoImage extends StatelessWidget {
               child: SizedBox(
                   height: 150,
                   width: 150,
-                  child: Image.asset("assets/kemendikbud.png", fit: BoxFit.fill)
+                  child: Image.asset("assets/logo.png", fit: BoxFit.fill)
               ),
             ),
           ),
