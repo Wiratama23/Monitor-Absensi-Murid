@@ -37,15 +37,6 @@ class AttendanceController extends GetxController {
     "November",
     "Desember"
   ];
-  List<String> days = [
-    "Senin",
-    "Selasa",
-    "Rabu",
-    "kamis",
-    "Jumat",
-    "Sabtu",
-    "Minggu"
-  ];
 
   String get currentMonth => months[currentMonthIndex.value];
 

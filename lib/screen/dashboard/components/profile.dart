@@ -4,15 +4,15 @@ class Profile extends StatelessWidget{
   const Profile({
     Key? key,
     required this.name,
-    required this.kelas,
+    this.kelas,
     required this.image,
-    required this.nis,
+    this.nis,
   }): super(key: key);
 
   final String name;
-  final String kelas;
+  final String? kelas;
   final String image;
-  final String nis;
+  final String? nis;
 
   @override
   Widget build(BuildContext context){
@@ -31,20 +31,19 @@ class Profile extends StatelessWidget{
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
                 child: SizedBox(
-                    height: 150,
-                    width: 150,
-                    child: Image.asset(image, fit: BoxFit.fill)
+                    height: 140,
+                    width: 110,
+                    // child: Image.asset(image, fit: BoxFit.fill)
+                  child: image == "unknown" ? Text(image) :Image.network("http://bersekolah.web.id:8002/files/foto/$image", fit: BoxFit.fill),
                 ),
               ),
             ),
-            const SizedBox(width: 40),
+            const SizedBox(width: 20),
             Column(
               children: [
                 Text(name),
-                SizedBox(height: 10),
-                Text("Kelas - $kelas"),
-                SizedBox(height: 10),
-                Text(nis)
+                if (kelas != null) ...[SizedBox(height: 10), Text("Kelas - $kelas")],
+                if (nis != null) ...[SizedBox(height: 10), Text("$nis")],
               ],
             )
           ],

@@ -8,12 +8,16 @@ import 'package:get/get.dart';
 import 'dart:math' as math;
 
 class DashboardSiswa extends GetView<DashboardController> {
-  const DashboardSiswa({super.key});
-  static const String _nama = Dummy.nama;
-  static const String _kelas = Dummy.kelas;
-  static const String _nis = Dummy.nis;
-  static const String _images = Dummy.image;
+  DashboardSiswa({super.key});
+  // String _nama = controller.nama;
+  // Map<String, dynamic> data = DashboardController.data;
+  // String _nama = data['nama_siswa'];
+  // String _kelas = DashboardController.kelas;
+  // static const String _nis = Dummy.nis;
+  // String _images = DashboardController.image;
   static const List<Map<String, String>> presensi = Dummy.presensi;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +47,14 @@ class DashboardSiswa extends GetView<DashboardController> {
                 ),
               ),
             ),
-            const Profile(
-                name: _nama,
-                kelas: _kelas,
-                image: _images,
-                nis: _nis),
+            Obx(
+              ()=> Profile(
+                  name: controller.data.isNotEmpty ? controller.data[0]['nama_siswa']  : "unknown",
+                  // kelas: _kelas,
+                  image: controller.data.isNotEmpty ? controller.data[0]['foto']  : "unknown",
+                  // nis: _nis
+              ),
+            ),
             const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),

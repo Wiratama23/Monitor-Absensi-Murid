@@ -22,7 +22,7 @@ class Routes {
         name: Names.pageDashboard,
         transition: Transition.circularReveal,
         transitionDuration: const Duration(seconds: 1),
-        page: () => const DashboardSiswa(),
+        page: () => DashboardSiswa(),
         binding: BindingsBuilder(() {
           Get.put(DashboardController());
         })
