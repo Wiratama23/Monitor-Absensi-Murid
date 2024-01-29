@@ -9,7 +9,7 @@ class Attendance extends StatelessWidget{
     required this.data,
   }):super(key:key);
 
-  final List<Map<String, String>> data;
+  final List<Map<String, dynamic>> data;
   final AttendanceController controller = AttendanceController();
 
   @override

@@ -1,6 +1,7 @@
 import 'package:absensi_sd/routes/routes_name.dart';
 import 'package:absensi_sd/screen/attendances/attendance_screen.dart';
 import 'package:absensi_sd/screen/attendances/controller.dart';
+import 'package:absensi_sd/screen/dashboard/controller.dart';
 import 'package:absensi_sd/screen/dashboard/dashboard_screen.dart';
 import 'package:absensi_sd/screen/loginscreen/controller.dart';
 import 'package:absensi_sd/screen/loginscreen/login_screen.dart';
@@ -22,9 +23,9 @@ class Routes {
         transition: Transition.circularReveal,
         transitionDuration: const Duration(seconds: 1),
         page: () => const DashboardSiswa(),
-        // binding: BindingsBuilder(() {
-        //   Get.put(LoginController());
-        // })
+        binding: BindingsBuilder(() {
+          Get.put(DashboardController());
+        })
     ),
     GetPage(
       name: Names.pageAttendance,

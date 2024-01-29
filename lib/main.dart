@@ -19,8 +19,8 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       popGesture: false,
       title: 'Absensi App',
-      home: const DashboardSiswa(),
-      // initialRoute: Names.pageLogin,
+      // home: const DashboardSiswa(),
+      initialRoute: Names.pageLogin,
       getPages: Routes.pages,
       debugShowCheckedModeBanner: false,
     );

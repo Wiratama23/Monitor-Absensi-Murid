@@ -1,12 +1,13 @@
 import 'package:absensi_sd/dummyData.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
 import 'package:absensi_sd/screen/dashboard/components/profile.dart';
+import 'package:absensi_sd/screen/dashboard/controller.dart';
 import 'package:absensi_sd/screen/globalcomponents/build_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
 
-class DashboardSiswa extends StatelessWidget {
+class DashboardSiswa extends GetView<DashboardController> {
   const DashboardSiswa({super.key});
   static const String _nama = Dummy.nama;
   static const String _kelas = Dummy.kelas;
