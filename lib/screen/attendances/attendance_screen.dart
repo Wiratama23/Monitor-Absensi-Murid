@@ -8,11 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AttendanceSiswa extends GetView<AttendanceController> {
-  static const String _nama = Dummy.nama;
-  static const String _kelas = Dummy.kelas;
-  static const String _nis = Dummy.nis;
-  static const String _images = Dummy.image;
-  // static const List<Map<String, String>> presensi = Dummy.presensi;
   const AttendanceSiswa({super.key});
 
   @override
