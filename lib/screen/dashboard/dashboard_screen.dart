@@ -1,11 +1,14 @@
 import 'package:absensi_sd/dummyData.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
+import 'package:absensi_sd/screen/attendances/controller.dart';
 import 'package:absensi_sd/screen/dashboard/components/profile.dart';
 import 'package:absensi_sd/screen/dashboard/controller.dart';
 import 'package:absensi_sd/screen/globalcomponents/build_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
+
+import 'package:intl/intl.dart';
 
 class DashboardSiswa extends GetView<DashboardController> {
   DashboardSiswa({super.key});
@@ -34,7 +37,7 @@ class DashboardSiswa extends GetView<DashboardController> {
               child: GestureDetector(
                 onTap: (){
                   //adding logout function.........
-                  Get.toNamed(Names.pageLogin);
+                  // Get.toNamed(Names.pageLogin);
                   controller.logout();
                 },
                 child: SizedBox(
@@ -57,21 +60,25 @@ class DashboardSiswa extends GetView<DashboardController> {
               ),
             ),
             const SizedBox(height: 5),
-            Padding(
+
+            DateTime.now().weekday<6 ?Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Card(
-                color: Colors.tealAccent,
+                color: AttendanceController().genColor("Hadir"),
                 child: Container(
                   height: 80,
-                  child: const Center(
-                    child: ListTile(
-                      leading: Text("Senin, 22 Januari 2024", style: TextStyle(fontSize: 18)),
-                      trailing: Icon(Icons.check),
+                  child: Center(
+                    child:  ListTile(
+                      leading:Text(
+                        DateFormat('EEEE, dd MMMM yyyy').format(DateTime.now()),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      trailing: AttendanceController().buildLeadingIcon("Hadir"),
                     ),
                   ),
                 ),
               ),
-            ),
+            ): SizedBox(),
             const SizedBox(height: 20),
             GestureDetector(
               onTap: (){
@@ -83,9 +90,9 @@ class DashboardSiswa extends GetView<DashboardController> {
                   color: Colors.limeAccent,
                   child: Container(
                     height: 200,
-                    child: const Center(
+                    child: Center(
                       child: ListTile(
-                        title: Text("Januari 2024", style: TextStyle(fontSize: 25)),
+                        title: Text(DateFormat('MMMM yyyy').format(DateTime.now()), style: TextStyle(fontSize: 25)),
                         subtitle: Text("Total Kehadiran: 10/28"),
                         trailing: Icon(Icons.calendar_month),
                       ),

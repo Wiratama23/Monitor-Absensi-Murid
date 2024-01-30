@@ -19,6 +19,8 @@ class LoginController extends GetxController {
   static const String url="http://bersekolah.web.id/m_api/login_siswa";
 
   Future<void> Login(String userId, String userPass) async {
+    await shared?.setString('userid', userId);
+    await shared?.setString('userpass', userPass);
 
     var reqBody = {
       "nisn": userId,
@@ -30,11 +32,12 @@ class LoginController extends GetxController {
       headers: {"Content-Type":"application/json"},
       body: jsonEncode(reqBody)
     );
+    // jsonResponse.containsKey('token')
     // jsonResponse['status'] == 200
     Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-    if(jsonResponse.containsKey('token')){
+    if(response.statusCode == 200){
       var token = jsonResponse['token'].toString();
-      print(jsonResponse);
+      print(response.statusCode);
       await shared?.setString('token', jsonResponse['token'].toString());
       Get.offAndToNamed(Names.pageDashboard);
       print("Token : $token");
@@ -45,21 +48,64 @@ class LoginController extends GetxController {
     }
 
   }
+  static const String urlSiswa="http://bersekolah.web.id:8002/m_api/profil_siswa";
+  bool fetched = false;
   @override
   Future<void> onInit() async {
     super.onInit();
+    fetched = false;
     shared = await SharedPreferences.getInstance();
-    token = shared!.getString('token');
-    if(token != null){
-      Get.offAndToNamed(Names.pageDashboard);
+    if(shared!.getString('token') != null){
+      // await shared?.setString('fetched', fetched.toString());
+      getProfileData();
     }
     print("ini share preferences(login) :$token");
   }
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  //   shared!.remove('token');
-  // }
+  Future<void> getProfileData() async {
+    try{
+      fetched = true;
+      token = shared!.getString('token');
+      var response = await http.get(
+        Uri.parse(urlSiswa),
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization':'Bearer $token'
+        },
+      );
+      // jsonResponse['status'] == 200
+      var jsonResponse = jsonDecode(response.body);
+      Map<String, dynamic> responseData = {
+        "foto": jsonResponse['foto'],
+        "id_sekolah": jsonResponse['id_sekolah'],
+        "nama_siswa": jsonResponse['nama_siswa'],
+        "nisn": jsonResponse['nisn'],
+        "user_id": jsonResponse['user_id']
+      };
+      String jsonData = jsonEncode(responseData);
+      print("response ${response.statusCode}");
+      await shared?.setString('user', jsonData);
+      print(jsonResponse);
+      Get.offAndToNamed(Names.pageDashboard);
+    }catch (e){
+      print(e);
+      var userid = shared!.getString('userid');
+      var userpass = shared!.getString('userpass');
+      print("login otomatis");
+      Login(userid!, userpass!);
+    }
+    //nama = data['nama_siswa'];
+    //image = data['foto'];
+
+  }
+
+  @override
+  Future<void> onClose() async {
+    super.onClose();
+    if(fetched == false){
+      await getProfileData();
+    }
+    // shared!.remove('token');
+  }
 
 }

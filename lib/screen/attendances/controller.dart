@@ -73,6 +73,10 @@ class AttendanceController extends GetxController {
       currentMonthIndex.value = months.length - 1;
     }
   }
+  //
+  // checkAttendanceToday(){
+  //   pre
+  // }
 
   Widget buildLeadingIcon(String? status) {
     return Icon(
