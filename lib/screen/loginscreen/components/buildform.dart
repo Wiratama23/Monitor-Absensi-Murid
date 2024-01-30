@@ -48,7 +48,7 @@ class BuildForm extends StatelessWidget {
         BuildButton(
             text: "Login",
             onPressed: (){
-              FocusManager.instance.primaryFocus?.unfocus();
+              FocusScope.of(context).unfocus();
               controller.Login(controller.id.text, controller.pass.text);
             }
         ),
