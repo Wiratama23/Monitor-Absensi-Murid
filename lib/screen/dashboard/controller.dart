@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:absensi_sd/screen/loginscreen/controller.dart' as login;
 
 import '../../routes/routes_name.dart';
 
@@ -37,20 +38,20 @@ class DashboardController extends GetxController {
 
   }
 
-
   @override
   Future<void> onInit() async {
     super.onInit();
     shared = await SharedPreferences.getInstance();
     token = shared!.getString('token');
     await getProfileData();
-    print("ini share preferences :$token");
+    print("ini share preferences(dashboard) :$token");
   }
 
-// @override
-// void onClose() {
-//   super.onClose();
-//   shared!.remove('token');
-// }
+ void logout(){
+    if(shared!.containsKey('token')){
+      shared!.remove('token');
+      Get.offAndToNamed('/login');
+    }
 
+ }
 }

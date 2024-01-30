@@ -53,7 +53,7 @@ class LoginController extends GetxController {
     if(token != null){
       Get.offAndToNamed(Names.pageDashboard);
     }
-    print("ini share preferences :$token");
+    print("ini share preferences(login) :$token");
   }
 
   // @override

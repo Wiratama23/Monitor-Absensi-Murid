@@ -35,6 +35,7 @@ class DashboardSiswa extends GetView<DashboardController> {
                 onTap: (){
                   //adding logout function.........
                   Get.toNamed(Names.pageLogin);
+                  controller.logout();
                 },
                 child: SizedBox(
                     width: 50,
