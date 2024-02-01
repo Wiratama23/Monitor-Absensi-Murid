@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:absensi_sd/dummyData.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
 import 'package:absensi_sd/screen/attendances/components/attendance.dart';
 import 'package:absensi_sd/screen/attendances/controller.dart';
@@ -24,7 +23,6 @@ class AttendanceSiswa extends GetView<AttendanceController> {
               padding: const EdgeInsets.only(left: 16.0, top: 8.0),
               child: GestureDetector(
                 onTap: () {
-                  //adding logout function.........
                   Get.toNamed(Names.pageDashboard);
                 },
                 child: SizedBox(
@@ -72,28 +70,6 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                           }
                         }),
                   ]),
-
-                  //     DropdownDatePicker(
-                  //     inputDecoration: InputDecoration(
-                  //         enabledBorder: const OutlineInputBorder(
-                  //           borderSide: BorderSide(color: Colors.grey, width: 1.0),
-                  //         ),
-                  //         border: OutlineInputBorder(
-                  //             borderRadius: BorderRadius.circular(10))), // optional
-                  //     isDropdownHideUnderline: true, // optional
-                  //     startYear: 2023, // optional
-                  //     endYear: 2025, // optional
-                  //     width: 10, // optional
-                  //     selectedMonth: controller.month!.value, // optional
-                  //     selectedYear: controller.year!.value, // optional
-                  //     onChangedMonth: (value) => {
-                  //
-                  //       controller.onChangedMonth(int.parse(value!))
-                  //     },
-                  //     onChangedYear: (value) => controller.onChangedYear(int.parse(value!)),
-                  //     showDay: false,
-                  //     locale: "en"
-                  // ),
                 ),
               ),
             ),
@@ -123,7 +99,7 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                 ],
               ),
             ),
-            Attendance(data: controller.presensi),
+            Attendance(data: controller.presensi,controller: controller),
           ],
         ),
       ),

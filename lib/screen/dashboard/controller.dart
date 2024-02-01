@@ -36,7 +36,5 @@ class DashboardController extends GetxController {
       shared!.remove('userid');
       shared!.remove('userpass');
       Get.offAndToNamed(Names.pageLogin);
-    // if(shared!.containsKey('token')){
-    // }
  }
 }

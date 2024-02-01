@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 
@@ -15,12 +16,15 @@ import '../../routes/routes_name.dart';
 class AttendanceController extends GetxController {
   // final RxInt currentMonthIndex = 5.obs;
   // final RxInt currentYear = 2030.obs;
+  RxInt itemCount = RxInt(0);
   SharedPreferences? shared;
   var token;
-  final RxInt currentMonthIndex = (DateTime.now().month - 1).obs;
-  final RxInt currentYear = DateTime.now().year.obs;
+  RxInt currentMonthIndex = (DateTime.now().month - 1).obs;
+  RxInt currentYear = DateTime.now().year.obs;
+  // final RxInt currentMonthIndex = 8.obs;
+  // final RxInt currentYear = 2023.obs;
   List<int> years = [];
-  List<Map<String, dynamic>> presensi = [];
+  RxList<dynamic> presensi = [].obs;
 
   // List of months
   List<String> months = [
@@ -73,10 +77,40 @@ class AttendanceController extends GetxController {
       currentMonthIndex.value = months.length - 1;
     }
   }
-  //
-  // checkAttendanceToday(){
-  //   pre
-  // }
+
+  String cekStatus(DateTime? datang, DateTime? pulang){
+    String status = "Tidak hadir";
+    if(datang!=null||pulang!=null){
+      if(datang == DateTime.now() || pulang == DateTime.now()){
+        status = "Hadir";
+      }
+    }
+    return status;
+  }
+
+  void currentMonthDays(int year, int month){
+    int days=0;
+    if(DateTime.now().year == year && DateTime.now().month == month){
+      days = DateTime.now().day;
+    } else {
+      days = DateTime(year,month).day;
+    }
+    print("print $days");
+    itemCount.value = days;
+    update();
+    print("itemkon ${itemCount.value}");
+  }
+
+  DateTime? extractDate(String dateTimeString) {
+    if (dateTimeString != null && dateTimeString.isNotEmpty) {
+      DateTime dateTime = DateTime.parse(dateTimeString);
+      print("Extracted Date : ${DateTime(dateTime.year, dateTime.month, dateTime.day)}");
+      return DateTime(dateTime.year, dateTime.month, dateTime.day);
+    } else {
+      print("Extracted Date Error");
+      return null;
+    }
+  }
 
   Widget buildLeadingIcon(String? status) {
     return Icon(
@@ -92,8 +126,8 @@ class AttendanceController extends GetxController {
   static const String urlPresensi = "http://bersekolah.web.id:8002/m_api/load_presensi_individu";
   Future<void> getAttendanceData() async {
     var reqBody = {
-      'tahun':'2023',
-      'bulan': '8'
+      'tahun':'${currentYear}',
+      'bulan': '${currentMonthIndex}'
     };
     var response = await http.post(
         Uri.parse(urlPresensi),
@@ -107,14 +141,8 @@ class AttendanceController extends GetxController {
     var jsonResponse = jsonDecode(response.body);
     print(jsonResponse);
     presensi!.addAll(jsonResponse['data']);
-
-    // // print(jsonResponse);
-    // print(nisndat);
-    // await shared?.setString('nisn', nisndat['nisn']);
-    // var nisn = shared!.getString('nisn');
-    // print("Nisn: $nisn");
-
   }
+
 
   @override
   Future<void> onInit() async {
@@ -122,6 +150,9 @@ class AttendanceController extends GetxController {
     shared = await SharedPreferences.getInstance();
     token = shared!.getString('token');
     getAttendanceData();
+    currentMonthDays(DateTime.now().month - 1, DateTime.now().year);
     print("ini share preferences :$token");
+    // update();
   }
+
 }

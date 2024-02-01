@@ -18,6 +18,7 @@ class DashboardSiswa extends GetView<DashboardController> {
   // String _kelas = DashboardController.kelas;
   // static const String _nis = Dummy.nis;
   // String _images = DashboardController.image;
+  // String _nis =
   static const List<Map<String, String>> presensi = Dummy.presensi;
 
 
@@ -57,6 +58,7 @@ class DashboardSiswa extends GetView<DashboardController> {
                   // kelas: _kelas,
                   image: controller.data.isNotEmpty ? controller.data[0]['foto']  : "unknown",
                   // nis: _nis
+                  nis: controller.data[0]['nisn'],
               ),
             ),
             const SizedBox(height: 5),
