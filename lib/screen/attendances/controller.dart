@@ -68,13 +68,13 @@ class AttendanceController extends GetxController {
     return years;
   }
 
-  AttendanceController() {
-    years = genYears(currentYear);
-    getAttendanceData();
-    print("presensi on AttendanceController() = $presensi");
-    print("presensi.value on AttendanceController() = ${presensi.value}");
-
-  }
+  // AttendanceController() {
+  //   years = genYears(currentYear);
+  //   // getAttendanceData();
+  //   print("presensi on AttendanceController() = $presensi");
+  //   print("presensi.value on AttendanceController() = ${presensi.value}");
+  //
+  // }
 
   void incrementMonth() {
     if (currentMonthIndex.value < months.length - 1) {
@@ -84,7 +84,7 @@ class AttendanceController extends GetxController {
       currentMonthIndex.value = 0;
     }
     currentMonthDays(currentYear.value, currentMonthIndex.value+1);
-    getAttendanceData();
+    getAttendanceData(currentYear.value, currentMonthIndex.value);
 
   }
 
@@ -96,7 +96,7 @@ class AttendanceController extends GetxController {
       currentMonthIndex.value = months.length - 1;
     }
     currentMonthDays(currentYear.value, currentMonthIndex.value+1);
-    getAttendanceData();
+    getAttendanceData(currentYear.value, currentMonthIndex.value);
 
   }
 
@@ -170,7 +170,7 @@ class AttendanceController extends GetxController {
   }
 
   static const String urlPresensi = "http://bersekolah.web.id:8002/m_api/load_presensi_individu";
-  Future<void> getAttendanceData({int? year, int? month}) async {
+  Future<void> getAttendanceData(int? year, int? month) async {
     var reqBody;
     if(year==null&&month==null){
       reqBody = {
@@ -228,7 +228,6 @@ class AttendanceController extends GetxController {
     super.onInit();
     shared = await SharedPreferences.getInstance();
     token = shared!.getString('token');
-    getAttendanceData();
     // currentMonthDays(DateTime.now().month - 1, DateTime.now().year);
     // print("itemCount.value onInit() : ${itemCount.value}");
     // print("on init DateTime.now().month - 1, DateTime.now().year : ${DateTime.now().month - 1}, ${DateTime.now().year}");

@@ -62,7 +62,7 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                                       controller.months.indexOf(newVal!);
                                   controller.currentMonthDays(controller.currentYear.value, controller.currentMonthIndex.value+1);
                                   controller.currentDataIndex.value=0;
-                                  controller.getAttendanceData();
+                                  controller.getAttendanceData(controller.currentYear.value, controller.currentMonthIndex.value);
                                 }
                                 ),
                             const SizedBox(width: 10),
@@ -82,7 +82,7 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                                   }
                                   controller.currentMonthDays(controller.currentYear.value, controller.currentMonthIndex.value+1);
                                   controller.currentDataIndex.value=0;
-                                  controller.getAttendanceData();
+                                  controller.getAttendanceData(controller.currentYear.value, controller.currentMonthIndex.value);
                                 }),
                           ]),
                 ),
