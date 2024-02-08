@@ -18,7 +18,6 @@ class DashboardController extends GetxController {
   late String nama;
   late String image;
   static late String nis;
-
   final bool isSecure = true;
   late Size mediaSize;
 
@@ -28,6 +27,7 @@ class DashboardController extends GetxController {
     shared = await SharedPreferences.getInstance();
     savedat = shared!.get('user');
     data.add(jsonDecode(savedat));
+    print(data);
     print("ini share preferences(dashboard) :");
   }
 

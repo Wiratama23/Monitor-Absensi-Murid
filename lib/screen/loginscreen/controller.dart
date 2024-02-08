@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../routes/routes_name.dart';
 
 class LoginController extends GetxController {
@@ -39,7 +37,7 @@ class LoginController extends GetxController {
       var token = jsonResponse['token'].toString();
       print(response.statusCode);
       await shared?.setString('token', jsonResponse['token'].toString());
-      Get.offAndToNamed(Names.pageDashboard);
+      getProfileData();
       print("Token : $token");
     } else {
       print(response.statusCode);
@@ -60,6 +58,7 @@ class LoginController extends GetxController {
       getProfileData();
     }
     print("ini share preferences(login) :$token");
+    // AttendanceController().getAttendanceData();
   }
 
   Future<void> getProfileData() async {
@@ -88,6 +87,7 @@ class LoginController extends GetxController {
       print(jsonResponse);
       Get.offAndToNamed(Names.pageDashboard);
     }catch (e){
+      shared!.remove('token');
       print(e);
       var userid = shared!.getString('userid');
       var userpass = shared!.getString('userpass');
@@ -105,7 +105,5 @@ class LoginController extends GetxController {
     if(fetched == false){
       await getProfileData();
     }
-    // shared!.remove('token');
   }
-
 }

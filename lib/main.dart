@@ -4,6 +4,7 @@ import 'package:absensi_sd/screen/dashboard/dashboard_screen.dart';
 import 'package:absensi_sd/screen/loginscreen/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_file.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

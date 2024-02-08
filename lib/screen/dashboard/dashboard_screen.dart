@@ -19,12 +19,17 @@ class DashboardSiswa extends GetView<DashboardController> {
   // static const String _nis = Dummy.nis;
   // String _images = DashboardController.image;
   // String _nis =
-  static const List<Map<String, String>> presensi = Dummy.presensi;
+  AttendanceController aController = AttendanceController();
 
 
 
   @override
   Widget build(BuildContext context) {
+    aController.getAttendanceData(year: DateTime.now().year, month : DateTime.now().month);
+    print("DateTime.now().day = ${DateTime.now().day-1}");
+    print(aController.presensi);
+    String status = aController.cekStatus(DateTime.now().day-1);
+    print("status on dashboard : $status");
     return PopScope(
       canPop: false,
       // onPopInvoked: (bool didpop){Get.toNamed(Names.pageLogin);},
@@ -53,20 +58,23 @@ class DashboardSiswa extends GetView<DashboardController> {
               ),
             ),
             Obx(
-              ()=> Profile(
+              ()=>
+                  Profile(
                   name: controller.data.isNotEmpty ? controller.data[0]['nama_siswa']  : "unknown",
                   // kelas: _kelas,
                   image: controller.data.isNotEmpty ? controller.data[0]['foto']  : "unknown",
                   // nis: _nis
-                  nis: controller.data[0]['nisn'],
+                  nis: controller.data.isNotEmpty ? controller.data[0]['nisn'] : "unknown" ,
               ),
             ),
             const SizedBox(height: 5),
 
-            DateTime.now().weekday<6 ?Padding(
+            Obx(() =>
+            // DateTime.now().weekday<6 ?
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Card(
-                color: AttendanceController().genColor("Hadir"),
+                color: aController.genColor(status),
                 child: Container(
                   height: 80,
                   child: Center(
@@ -75,12 +83,14 @@ class DashboardSiswa extends GetView<DashboardController> {
                         DateFormat('EEEE, dd MMMM yyyy').format(DateTime.now()),
                         style: TextStyle(fontSize: 18),
                       ),
-                      trailing: AttendanceController().buildLeadingIcon("Hadir"),
+                      trailing: aController.buildLeadingIcon(status),
                     ),
                   ),
                 ),
               ),
-            ): SizedBox(),
+            )
+                    // : SizedBox(),
+            ),
             const SizedBox(height: 20),
             GestureDetector(
               onTap: (){
