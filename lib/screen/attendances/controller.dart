@@ -166,11 +166,14 @@ class AttendanceController extends GetxController {
   }
 
   Color genColor(String? status) {
-    return status == "Hadir" ? Colors.tealAccent : Colors.orange;
+    return status == "Hadir" ? Colors.lightGreen : Colors.orange;
   }
 
   static const String urlPresensi = "http://bersekolah.web.id:8002/m_api/load_presensi_individu";
   Future<void> getAttendanceData(int? year, int? month) async {
+
+    shared = await SharedPreferences.getInstance();
+    token = shared!.getString('token');
     var reqBody;
     if(year==null&&month==null){
       reqBody = {
@@ -223,23 +226,24 @@ class AttendanceController extends GetxController {
   }
 
   final dateutil = DateUtilities();
-  @override
-  Future<void> onInit() async {
-    super.onInit();
-    shared = await SharedPreferences.getInstance();
-    token = shared!.getString('token');
-    // currentMonthDays(DateTime.now().month - 1, DateTime.now().year);
-    // print("itemCount.value onInit() : ${itemCount.value}");
-    // print("on init DateTime.now().month - 1, DateTime.now().year : ${DateTime.now().month - 1}, ${DateTime.now().year}");
-    // // print("${DateTime(year,month).day}");
-    // print("ini share preferences :$token");
-    // // print("${dateutil.}")
-    // print("on init DateTime.now().day.days.inDays : ${DateTime.now().day.days.inDays}");
-    // print("on init DateTime.now().day.days : ${DateTime.now().day.days}");
-    // print("on init DateTime.now().day : ${DateTime.now().day}");
-    //
-    // print("ini total ${dateutil.daysInMonth(DateTime.now().month - 1, DateTime.now().year)}");
-    update();
-  }
+  // @override
+  // Future<void> onReady() async {
+  //   super.onReady();
+  //   shared = await SharedPreferences.getInstance();
+  //   token = shared!.getString('token');
+  //   print("ini token attendance $token");
+  //   // currentMonthDays(DateTime.now().month - 1, DateTime.now().year);
+  //   // print("itemCount.value onInit() : ${itemCount.value}");
+  //   // print("on init DateTime.now().month - 1, DateTime.now().year : ${DateTime.now().month - 1}, ${DateTime.now().year}");
+  //   // // print("${DateTime(year,month).day}");
+  //   // print("ini share preferences :$token");
+  //   // // print("${dateutil.}")
+  //   // print("on init DateTime.now().day.days.inDays : ${DateTime.now().day.days.inDays}");
+  //   // print("on init DateTime.now().day.days : ${DateTime.now().day.days}");
+  //   // print("on init DateTime.now().day : ${DateTime.now().day}");
+  //   //
+  //   // print("ini total ${dateutil.daysInMonth(DateTime.now().month - 1, DateTime.now().year)}");
+  //   update();
+  // }
 
 }

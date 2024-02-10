@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:absensi_sd/screen/attendances/controller.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -23,6 +24,17 @@ class DashboardController extends GetxController {
   static late String nis;
   final bool isSecure = true;
   late Size mediaSize;
+  var token;
+  RxString status = "".obs;
+  Rx<Color> color = (Colors.grey).obs;
+
+  Rx<Widget> widget = const Icon(Icons.question_mark_outlined, color: Colors.grey).obs; // Initialize with default widget
+
+  // aController.getAttendanceData(year: DateTime.now().year, month : DateTime.now().month);
+  // print("DateTime.now().day = ${DateTime.now().day-1}");
+  // print(aController.presensi);
+  // String status = aController.cekStatus(DateTime.now().day-1);
+  // print("status on dashboard : $status");
 
   @override
   Future<void> onInit() async {
@@ -31,65 +43,21 @@ class DashboardController extends GetxController {
     token = shared!.getString('token');
     savedat = shared!.get('user');
     data.add(jsonDecode(savedat));
-    aController = AttendanceController();
+    aController = Get.find<AttendanceController>();
     print("ini share preferences(dashboard) : $token");
-    getData();
+    getCurrentData();
   }
 
-  // Future<void> getData() async {
-  //   print("${DateTime.now().month} - ${DateTime.now().year}");
-  //   // print(aController);
-  //   // await aController!.getAttendanceData(2023, 8);
-  //   // datas.addAll(aController!.presensi.value);
-  //   // print("ini data : ${datas.value}");
-  //   // print(datas.length);
-  // }
-
-  var token;
-  static const String urlPresensi = "http://bersekolah.web.id:8002/m_api/load_presensi_individu";
-  Future<void> getData() async {
-    var reqBody;
-      reqBody = {
-        'tahun':'${DateTime.now().year}',
-        'bulan': '${DateTime.now().month}'
-      };
-    print("reqBody = $reqBody");
-    var response = await http.post(
-        Uri.parse(urlPresensi),
-        headers: {
-          'Content-Type':'application/json',
-          'Authorization':'Bearer $token'
-        },
-        body:jsonEncode(reqBody)
-    );
-    // print("response : $response");
-    // jsonResponse['status'] == 200
-    // print("response.statusCode : ${response.statusCode}");
-    var jsonResponse = jsonDecode(response.body);
-    if(response.statusCode==200){
-      if (jsonResponse.containsKey("data")) {
-        var data = jsonResponse["data"];
-        print("ini responsenya : $data");
-        if (data is List) {
-          // Clear the existing data before adding the new data
-          datas.clear();
-
-          // Add the new data to the presensi list
-          datas.addAll(data);
-
-          print("presensi.value on getAttendanceData(): ${datas.value}");
-        } else {
-          print("Invalid data format in the response.");
-        }
-      } else {
-        print("Missing 'data' key in the response.");
-      }
-    } else {
-      print("getAttendanceData() load data failed");
-    }
-    print("presensi.value on getAttendanceData() : ${datas.value}");
-    print("presensi on getAttendanceData() : ${datas}");
-
+  void getCurrentData() async {
+    await aController!.getAttendanceData(DateTime.now().year, DateTime.now().month);
+    // aController.getAttendanceData(year: DateTime.now().year, month : DateTime.now().month);
+    // print("DateTime.now().day = ${DateTime.now().day-1}");
+    // print(aController.presensi);
+    status.value = aController!.cekStatus(6);
+    color.value = aController!.genColor(status.value)!;
+    widget.value = aController!.buildLeadingIcon(status.value);
+    // update();
+    print("status on dashboard : $status");
   }
 
   void logout(){
@@ -98,10 +66,10 @@ class DashboardController extends GetxController {
         shared!.remove('userpass');
         Get.offAndToNamed(Names.pageLogin);
   }
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    super.onReady();
-    getData();
-  }
+  // @override
+  // void onReady() {
+  //   // TODO: implement onReady
+  //   super.onReady();
+  //   getData();
+  // }
 }

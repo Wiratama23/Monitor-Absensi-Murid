@@ -69,12 +69,12 @@ class DashboardSiswa extends GetView<DashboardController> {
             ),
             const SizedBox(height: 5),
 
-            // Obx(() =>
+            Obx(() =>
             // DateTime.now().weekday<6 ?
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Card(
-                  color: Colors.green,//aController.genColor(status),
+                  color: controller.color.value,
                   child: Container(
                     height: 80,
                     child: Center(
@@ -83,14 +83,14 @@ class DashboardSiswa extends GetView<DashboardController> {
                           DateFormat('EEEE, dd MMMM yyyy').format(DateTime.now()),
                           style: TextStyle(fontSize: 18),
                         ),
-                        trailing: Text("Hadir"),//aController.buildLeadingIcon(status),
+                        trailing: controller.widget.value,
                       ),
                     ),
                   ),
                 ),
               ),
                       // : SizedBox(),
-            // ),
+            ),
             const SizedBox(height: 20),
             GestureDetector(
               onTap: (){

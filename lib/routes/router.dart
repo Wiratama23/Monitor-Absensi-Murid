@@ -25,6 +25,7 @@ class Routes {
         page: () => DashboardSiswa(),
         binding: BindingsBuilder(() {
           Get.put(DashboardController());
+          Get.put(AttendanceController());
         })
     ),
     GetPage(
@@ -32,9 +33,6 @@ class Routes {
       transition: Transition.circularReveal,
       transitionDuration: const Duration(seconds: 1),
       page: () => const AttendanceSiswa(),
-      binding: BindingsBuilder(() {
-        Get.put(AttendanceController());
-      })
     ),
   ];
 }
