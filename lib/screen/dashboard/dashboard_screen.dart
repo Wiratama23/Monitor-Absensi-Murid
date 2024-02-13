@@ -23,6 +23,7 @@ class DashboardSiswa extends GetView<DashboardController> {
 
 
 
+
   @override
   Widget build(BuildContext context) {
     // aController.getAttendanceData(year: DateTime.now().year, month : DateTime.now().month);
@@ -60,7 +61,7 @@ class DashboardSiswa extends GetView<DashboardController> {
             Obx(
               ()=>
                   Profile(
-                  name: controller.data.isNotEmpty ? controller.data[0]['nama_siswa']  : "unknown",
+                  name: controller.data.isNotEmpty  ? controller.data[0]['nama_siswa']  : "unknown",
                   // kelas: _kelas,
                   image: controller.data.isNotEmpty ? controller.data[0]['foto']  : "unknown",
                   // nis: _nis
@@ -70,7 +71,7 @@ class DashboardSiswa extends GetView<DashboardController> {
             const SizedBox(height: 5),
 
             Obx(() =>
-            // DateTime.now().weekday<6 ?
+            DateTime.now().weekday<6 ?
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Card(
@@ -80,7 +81,7 @@ class DashboardSiswa extends GetView<DashboardController> {
                     child: Center(
                       child:  ListTile(
                         leading:Text(
-                          DateFormat('EEEE, dd MMMM yyyy').format(DateTime.now()),
+                          "${controller.days[DateTime.now().weekday-1]}, ${DateTime.now().day} ${controller.months[DateTime.now().month-1]} ${DateTime.now().year}",
                           style: TextStyle(fontSize: 18),
                         ),
                         trailing: controller.widget.value,
@@ -88,10 +89,11 @@ class DashboardSiswa extends GetView<DashboardController> {
                     ),
                   ),
                 ),
-              ),
-                      // : SizedBox(),
+              )
+                      : SizedBox(),
             ),
             const SizedBox(height: 20),
+        //
             GestureDetector(
               onTap: (){
                 Get.toNamed(Names.pageAttendance);
@@ -103,16 +105,20 @@ class DashboardSiswa extends GetView<DashboardController> {
                   child: Container(
                     height: 200,
                     child: Center(
-                      child: ListTile(
-                        title: Text(DateFormat('MMMM yyyy').format(DateTime.now()), style: TextStyle(fontSize: 25)),
-                        subtitle: Text("Total Kehadiran: 10/28"),
+                      child:
+                      Obx(() =>
+                      ListTile(
+                        title: Text("${controller.thisMonth} ${DateTime.now().year}", style: TextStyle(fontSize: 25)),
+                        subtitle: Text("Total Kehadiran: ${controller.present}/${controller.daysInMonth}"),
                         trailing: Icon(Icons.calendar_month),
-                      ),
+                      )
+                    )
                     ),
                   ),
                 ),
               ),
             )
+        //
           ],
         ),
       ),

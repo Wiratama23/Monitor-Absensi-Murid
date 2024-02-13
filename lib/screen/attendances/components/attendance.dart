@@ -37,7 +37,7 @@ class Attendance extends StatelessWidget {
                 return
                   date.weekday<6?BuildTile(
                     title: controller.days[date.weekday-1],//DateFormat('EEEE').format(date),
-                    subtitle: DateFormat("d MMMM yyyy").format(date).toString(),
+                    subtitle: "${index + 1} ${controller.months[controller.currentMonthIndex.value]} ${controller.currentYear.value}",//DateFormat("d MMMM yyyy").format(date).toString(),
                     trailing: status,
                     leading: controller.buildLeadingIcon(status),
                     color: controller.genColor(status),

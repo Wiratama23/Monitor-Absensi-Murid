@@ -22,11 +22,12 @@ class AttendanceController extends GetxController {
   var token;
   RxInt currentMonthIndex = (DateTime.now().month - 1).obs;
   RxInt currentYear = DateTime.now().year.obs;
-  RxInt currentDataIndex = 0.obs;
   // final RxInt currentMonthIndex = 8.obs;
   // final RxInt currentYear = 2023.obs;
   List<int> years = [];
   RxList<dynamic> presensi = [].obs;
+
+  RxList<String> monthsForYear = [""].obs;
 
   // List of months
   List<String> months = [
@@ -56,35 +57,80 @@ class AttendanceController extends GetxController {
 
   String get currentMonth => months[currentMonthIndex.value];
 
+  void updateMonthsList(){
+    monthsForYear.clear();
+    // print("currentYear")
+    if(DateTime.now().year==currentYear.value){
+      print("this month");
+      for(int i=0;i<(DateTime.now().month);i++){
+        monthsForYear.add(months[i]);
+      }
+    } else {
+      print("else this month");
+      for(int i=0;i<12;i++){
+        monthsForYear.add(months[i]);
+      }
+    }
+
+  }
+
+  void newVal({String? year, String? month}){
+    if (year != null) {
+      if(int.parse(year)==DateTime.now().year){
+        currentMonthIndex.value=DateTime.now().month-1;
+      }
+      currentYear.value =
+          int.parse(year!);
+    }
+    if(month !=null){
+      currentMonthIndex.value =
+          months.indexOf(month!);
+    }
+    currentMonthDays(currentYear.value, currentMonthIndex.value+1);
+    getAttendanceData();
+    updateMonthsList();
+
+  }
+
+
+
   List<int> genYears(RxInt currentYear) {
     List<int> years = [];
-    for (int i = 3; i >= 1; i--) {
+    for (int i = 4; i >= 1; i--) {
       years.add(currentYear.value - i);
     }
     years.add(currentYear.value);
-    for (int i = 1; i <= 3; i++) {
-      years.add(currentYear.value + i);
-    }
+    // for (int i = 1; i <= 3; i++) {
+    //   years.add(currentYear.value + i);
+    // }
     return years;
   }
 
-  // AttendanceController() {
-  //   years = genYears(currentYear);
-  //   // getAttendanceData();
-  //   print("presensi on AttendanceController() = $presensi");
-  //   print("presensi.value on AttendanceController() = ${presensi.value}");
-  //
-  // }
+  AttendanceController() {
+    years = genYears(currentYear);
+    updateMonthsList();
+    print("DateTime(currentYear.value,currentMonthIndex.value+1 = ${DateTime(currentYear.value,currentMonthIndex.value+1).month}");
+    // getAttendanceData();
+    print("presensi on AttendanceController() = $presensi");
+    print("presensi.value on AttendanceController() = ${presensi.value}");
+
+  }
 
   void incrementMonth() {
+    DateTime date = DateTime(currentYear.value,currentMonthIndex.value+1);
     if (currentMonthIndex.value < months.length - 1) {
-      currentMonthIndex.value++;
-    } else if (currentMonthIndex.value >= months.length - 1 && currentYear < years.last) {
+      if((currentYear.value == DateTime.now().year) && (currentMonthIndex.value+1 < DateTime.now().month)) {
+        currentMonthIndex.value++;
+      }else if(currentYear.value < DateTime.now().year){
+        currentMonthIndex.value++;
+      }
+    } else if ((currentMonthIndex.value >= months.length - 1) && (currentYear < years.last)) {
       currentYear.value++;
       currentMonthIndex.value = 0;
     }
     currentMonthDays(currentYear.value, currentMonthIndex.value+1);
-    getAttendanceData(currentYear.value, currentMonthIndex.value);
+    getAttendanceData();
+    updateMonthsList();
 
   }
 
@@ -96,7 +142,9 @@ class AttendanceController extends GetxController {
       currentMonthIndex.value = months.length - 1;
     }
     currentMonthDays(currentYear.value, currentMonthIndex.value+1);
-    getAttendanceData(currentYear.value, currentMonthIndex.value);
+    getAttendanceData();
+    updateMonthsList();
+
 
   }
 
@@ -126,7 +174,7 @@ class AttendanceController extends GetxController {
     return status;
   }
 
-  void currentMonthDays(int year, int month){
+  int currentMonthDays(int year, int month){
     int days=0;
     // print("year on currentMonthDays:$year");
     // print("month on currentMonthDays:$month");
@@ -145,6 +193,7 @@ class AttendanceController extends GetxController {
     itemCount.value = days;
     update();
     print("itemkon ${itemCount.value}");
+    return days;
   }
 
   DateTime? extractDate(String dateTimeString) {
@@ -161,16 +210,16 @@ class AttendanceController extends GetxController {
   Widget buildLeadingIcon(String? status) {
     return Icon(
       status == "Hadir" ? Icons.check_box : Icons.check_box_outline_blank,
-      color: status == "Hadir" ? Colors.green : Colors.red,
+      color: status == "Hadir" ? Colors.black : Colors.red,
     );
   }
 
   Color genColor(String? status) {
-    return status == "Hadir" ? Colors.lightGreen : Colors.orange;
+    return status == "Hadir" ? Colors.cyanAccent : Colors.orange;
   }
 
   static const String urlPresensi = "http://bersekolah.web.id:8002/m_api/load_presensi_individu";
-  Future<void> getAttendanceData(int? year, int? month) async {
+  Future<void> getAttendanceData({int? year, int? month}) async {
 
     shared = await SharedPreferences.getInstance();
     token = shared!.getString('token');

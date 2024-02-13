@@ -26,7 +26,7 @@ class AttendanceSiswa extends GetView<AttendanceController> {
               padding: const EdgeInsets.only(left: 16.0, top: 8.0),
               child: GestureDetector(
                 onTap: () {
-                  Get.toNamed(Names.pageDashboard);
+                  Get.back(canPop: false);
                 },
                 child: SizedBox(
                   width: 50,
@@ -49,7 +49,7 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                             DropdownButton(
                                 alignment: Alignment.center,
                                 value: controller.currentMonth,
-                                items: controller.months.map((String month) {
+                                items: controller.monthsForYear.map((String month) {
                                   return DropdownMenuItem<String>(
                                       value: month,
                                       child: Text(month,
@@ -58,17 +58,16 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                                 }).toList(),
                                 // icon: const Icon(Icons.calendar_month),
                                 onChanged: (String? newVal) {
-                                  controller.currentMonthIndex.value =
-                                      controller.months.indexOf(newVal!);
-                                  controller.currentMonthDays(controller.currentYear.value, controller.currentMonthIndex.value+1);
-                                  controller.currentDataIndex.value=0;
-                                  controller.getAttendanceData(controller.currentYear.value, controller.currentMonthIndex.value);
+
+                                  controller.newVal(month : newVal);
                                 }
                                 ),
                             const SizedBox(width: 10),
                             DropdownButton(
-                                value: controller.currentYear.toString(),
+                                value: controller.currentYear.value.toString(),
                                 items: controller.years.map((int years) {
+                                  print("controller.currentYear = ${controller.currentYear}");
+                                  print("controller.currentYear.value = ${controller.currentYear.value}");
                                   return DropdownMenuItem<String>(
                                       value: years.toString(),
                                       child: Text(years.toString(),
@@ -76,13 +75,8 @@ class AttendanceSiswa extends GetView<AttendanceController> {
                                               fontSize: 25)));
                                 }).toList(),
                                 onChanged: (String? newVal) {
-                                  if (newVal != null) {
-                                    controller.currentYear.value =
-                                        int.parse(newVal);
-                                  }
-                                  controller.currentMonthDays(controller.currentYear.value, controller.currentMonthIndex.value+1);
-                                  controller.currentDataIndex.value=0;
-                                  controller.getAttendanceData(controller.currentYear.value, controller.currentMonthIndex.value);
+                                  controller.newVal(year: newVal);
+
                                 }),
                           ]),
                 ),
