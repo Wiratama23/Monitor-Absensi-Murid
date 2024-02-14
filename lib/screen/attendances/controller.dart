@@ -26,8 +26,8 @@ class AttendanceController extends GetxController {
   // final RxInt currentYear = 2023.obs;
   List<int> years = [];
   RxList<dynamic> presensi = [].obs;
-
   RxList<String> monthsForYear = [""].obs;
+  final ScrollController scrollController = ScrollController();
 
   // List of months
   List<String> months = [
@@ -113,7 +113,6 @@ class AttendanceController extends GetxController {
     // getAttendanceData();
     print("presensi on AttendanceController() = $presensi");
     print("presensi.value on AttendanceController() = ${presensi.value}");
-
   }
 
   void incrementMonth() {
@@ -294,5 +293,10 @@ class AttendanceController extends GetxController {
   //   // print("ini total ${dateutil.daysInMonth(DateTime.now().month - 1, DateTime.now().year)}");
   //   update();
   // }
+
+  ScrollController? scroll(){
+    if(currentYear.value==DateTime.now().year&&currentMonthIndex.value+1==DateTime.now().month)return scrollController;
+    else return null;
+  }
 
 }

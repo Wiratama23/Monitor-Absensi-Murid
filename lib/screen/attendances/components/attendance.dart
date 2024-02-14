@@ -14,19 +14,27 @@ class Attendance extends StatelessWidget {
   int count;
   List<dynamic> data;
   final AttendanceController controller;
+  // final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    print("data on attendance.dart : $data");
-    // print("controller.itemCount.value on attendance : ${controller.itemCount
-    //     .value}");
-    // controller.currentDataIndex.value = 0;
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      controller.scrollController.animateTo(
+        controller.scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
+
     return
       Expanded(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child:
           ListView.builder(
+              // controller: controller.scrollController,
+              // reverse: controller.reverse(),
+              controller: controller.scroll(),
               scrollDirection: Axis.vertical,
               itemCount: count, //data.length,
               itemBuilder: (context, index) {
@@ -37,7 +45,7 @@ class Attendance extends StatelessWidget {
                 return
                   date.weekday<6?BuildTile(
                     title: controller.days[date.weekday-1],//DateFormat('EEEE').format(date),
-                    subtitle: "${index + 1} ${controller.months[controller.currentMonthIndex.value]} ${controller.currentYear.value}",//DateFormat("d MMMM yyyy").format(date).toString(),
+                    subtitle: "${date.day} ${controller.months[date.month-1]} ${date.year}",//DateFormat("d MMMM yyyy").format(date).toString(),
                     trailing: status,
                     leading: controller.buildLeadingIcon(status),
                     color: controller.genColor(status),
