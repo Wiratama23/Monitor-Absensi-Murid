@@ -86,10 +86,13 @@ class AttendanceController extends GetxController {
       currentMonthIndex.value =
           months.indexOf(month!);
     }
+    updateData();
+  }
+
+  void updateData(){
     currentMonthDays(currentYear.value, currentMonthIndex.value+1);
     getAttendanceData();
     updateMonthsList();
-
   }
 
 
@@ -127,9 +130,7 @@ class AttendanceController extends GetxController {
       currentYear.value++;
       currentMonthIndex.value = 0;
     }
-    currentMonthDays(currentYear.value, currentMonthIndex.value+1);
-    getAttendanceData();
-    updateMonthsList();
+    updateData();
 
   }
 
@@ -140,11 +141,7 @@ class AttendanceController extends GetxController {
       currentYear.value--;
       currentMonthIndex.value = months.length - 1;
     }
-    currentMonthDays(currentYear.value, currentMonthIndex.value+1);
-    getAttendanceData();
-    updateMonthsList();
-
-
+    updateData();
   }
 
   String cekStatus(int index){
