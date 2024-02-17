@@ -6,6 +6,7 @@ import 'package:absensi_sd/screen/dashboard/controller.dart';
 import 'package:absensi_sd/screen/globalcomponents/build_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'components/navigationDrawer.dart';
 import 'dart:math' as math;
 
 import 'package:intl/intl.dart';
@@ -19,6 +20,8 @@ class DashboardSiswa extends GetView<DashboardController> {
   // static const String _nis = Dummy.nis;
   // String _images = DashboardController.image;
   // String _nis =
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
 
 
 
@@ -35,6 +38,8 @@ class DashboardSiswa extends GetView<DashboardController> {
       canPop: false,
       // onPopInvoked: (bool didpop){Get.toNamed(Names.pageLogin);},
       child: Scaffold(
+        key: _scaffoldKey,
+        drawer: DrawerItem(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -45,7 +50,9 @@ class DashboardSiswa extends GetView<DashboardController> {
                 onTap: (){
                   //adding logout function.........
                   // Get.toNamed(Names.pageLogin);
-                  controller.logout();
+                  // controller.logout();
+                  // Scaffold.of(context).openDrawer();
+                  _scaffoldKey.currentState!.openDrawer();
                 },
                 child: SizedBox(
                     width: 50,
@@ -69,9 +76,7 @@ class DashboardSiswa extends GetView<DashboardController> {
               ),
             ),
             const SizedBox(height: 5),
-
-            Obx(() =>
-            DateTime.now().weekday<6 ?
+            DateTime.now().weekday<6 ? Obx(() =>
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Card(
@@ -90,8 +95,7 @@ class DashboardSiswa extends GetView<DashboardController> {
                   ),
                 ),
               )
-                      : SizedBox(),
-            ),
+            ):SizedBox(),
             const SizedBox(height: 20),
         //
             GestureDetector(
