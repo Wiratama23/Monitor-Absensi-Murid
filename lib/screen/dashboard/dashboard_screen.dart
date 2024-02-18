@@ -39,7 +39,7 @@ class DashboardSiswa extends GetView<DashboardController> {
       // onPopInvoked: (bool didpop){Get.toNamed(Names.pageLogin);},
       child: Scaffold(
         key: _scaffoldKey,
-        drawer: DrawerItem(),
+        drawer: DrawerItem(controller: controller),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -60,7 +60,7 @@ class DashboardSiswa extends GetView<DashboardController> {
                     child: Transform(
                       alignment: Alignment.center,
                       transform: Matrix4.rotationY(math.pi),
-                      child: const Icon(Icons.logout),
+                      child: const Icon(Icons.menu),
                     )
                 ),
               ),
