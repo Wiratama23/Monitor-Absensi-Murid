@@ -31,7 +31,7 @@ class BuildHeader extends StatelessWidget {
         // ),
         decoration: const BoxDecoration(
           // borderRadius: BorderRadius.all(Radius.circular(15)),
-            color: Colors.green
+            color: Colors.lightBlueAccent
         ),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

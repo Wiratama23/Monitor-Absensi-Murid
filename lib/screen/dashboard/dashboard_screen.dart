@@ -105,7 +105,7 @@ class DashboardSiswa extends GetView<DashboardController> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Card(
-                  color: Colors.limeAccent,
+                  color: Colors.tealAccent,
                   child: Container(
                     height: 200,
                     child: Center(
