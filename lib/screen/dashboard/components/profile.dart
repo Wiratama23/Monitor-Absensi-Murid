@@ -33,7 +33,6 @@ class Profile extends StatelessWidget{
                 child: SizedBox(
                     height: 140,
                     width: 110,
-                    // child: Image.asset(image, fit: BoxFit.fill)
                   child: image == "unknown" ? Text(image) :Image.network("http://bersekolah.web.id:8002/files/foto/$image", fit: BoxFit.fill),
                 ),
               ),
@@ -42,8 +41,8 @@ class Profile extends StatelessWidget{
             Column(
               children: [
                 Text(name),
-                if (kelas != null) ...[SizedBox(height: 10), Text("Kelas - $kelas")],
-                if (nis != null) ...[SizedBox(height: 10), Text("$nis")],
+                if (kelas != null) ...[const SizedBox(height: 10), Text("Kelas - $kelas")],
+                if (nis != null) ...[const SizedBox(height: 10), Text("$nis")],
               ],
             )
           ],

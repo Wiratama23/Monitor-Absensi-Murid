@@ -24,7 +24,7 @@ class BuildTile extends StatelessWidget {
         height: 80,
         child: Center(
           child: ListTile(
-            leading: leading ?? null,
+            leading: leading,
             trailing: Text(trailing ?? ""),
             title: Text(title),
             subtitle: Text(subtitle ?? ""),

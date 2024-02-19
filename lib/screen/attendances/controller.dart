@@ -1,35 +1,24 @@
-import 'dart:ffi';
 
 import 'package:date_utilities/date_utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/date_symbol_data_file.dart';
-import 'package:intl/intl.dart';
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../routes/routes_name.dart';
 
 class AttendanceController extends GetxController {
-  // final RxInt currentMonthIndex = 5.obs;
-  // final RxInt currentYear = 2030.obs;
   RxInt itemCount = RxInt(0);
   SharedPreferences? shared;
   var token;
   RxInt currentMonthIndex = (DateTime.now().month - 1).obs;
   RxInt currentYear = DateTime.now().year.obs;
-  // final RxInt currentMonthIndex = 8.obs;
-  // final RxInt currentYear = 2023.obs;
   List<int> years = [];
   RxList<dynamic> presensi = [].obs;
   RxList<String> monthsForYear = [""].obs;
   final ScrollController scrollController = ScrollController();
 
-  // List of months
   List<String> months = [
     "Januari",
     "Februari",
@@ -59,14 +48,11 @@ class AttendanceController extends GetxController {
 
   void updateMonthsList(){
     monthsForYear.clear();
-    // print("currentYear")
     if(DateTime.now().year==currentYear.value){
-      print("this month");
       for(int i=0;i<(DateTime.now().month);i++){
         monthsForYear.add(months[i]);
       }
     } else {
-      print("else this month");
       for(int i=0;i<12;i++){
         monthsForYear.add(months[i]);
       }
@@ -80,11 +66,11 @@ class AttendanceController extends GetxController {
         currentMonthIndex.value=DateTime.now().month-1;
       }
       currentYear.value =
-          int.parse(year!);
+          int.parse(year);
     }
     if(month !=null){
       currentMonthIndex.value =
-          months.indexOf(month!);
+          months.indexOf(month);
     }
     updateData();
   }
@@ -103,23 +89,15 @@ class AttendanceController extends GetxController {
       years.add(currentYear.value - i);
     }
     years.add(currentYear.value);
-    // for (int i = 1; i <= 3; i++) {
-    //   years.add(currentYear.value + i);
-    // }
     return years;
   }
 
   AttendanceController() {
     years = genYears(currentYear);
     updateMonthsList();
-    print("DateTime(currentYear.value,currentMonthIndex.value+1 = ${DateTime(currentYear.value,currentMonthIndex.value+1).month}");
-    // getAttendanceData();
-    print("presensi on AttendanceController() = $presensi");
-    print("presensi.value on AttendanceController() = ${presensi.value}");
   }
 
   void incrementMonth() {
-    DateTime date = DateTime(currentYear.value,currentMonthIndex.value+1);
     if (currentMonthIndex.value < months.length - 1) {
       if((currentYear.value == DateTime.now().year) && (currentMonthIndex.value+1 < DateTime.now().month)) {
         currentMonthIndex.value++;
@@ -145,18 +123,13 @@ class AttendanceController extends GetxController {
   }
 
   String cekStatus(int index){
-    print("-----------------------------------");
     String status="Tidak Hadir";
     DateTime dateIndex = DateTime(currentYear.value,currentMonthIndex.value+1,index+1);
     DateTime? date;
-    String? use;
     for(var i=0;i<presensi.length;i++){
       if(presensi[i]["datang"]!=null){
-        // print('presensi[currentDataIndex.value]["datang"]:${presensi[currentDataIndex.value]["datang"]}');
-        use = "pulang";
         date = DateTime.parse(presensi[i]["datang"]);
       } else {
-        use = "pulang";
         date = DateTime.parse(presensi[i]["pulang"]);
       }
       if(date.year==dateIndex.year && date.month==dateIndex.month && date.day==dateIndex.day){
@@ -164,41 +137,27 @@ class AttendanceController extends GetxController {
       }
     }
 
-    print("use '$use' date $date");
-    print("status on $dateIndex = $status");
-    print("-----------------------------------");
     return status;
   }
 
   int currentMonthDays(int year, int month){
     int days=0;
-    // print("year on currentMonthDays:$year");
-    // print("month on currentMonthDays:$month");
-    // print("DateTime.now().year : ${DateTime.now().year}");
-    // print("DateTime.now().month : ${DateTime.now().month}");
     var cek = (DateTime.now().year == year && DateTime.now().month == month);
-    print("cek on currentMonthDays() : $cek");
     if(cek){
       days = DateTime.now().day;
-      print("is this day? days : $days");
     } else {
       days = (dateutil.daysInMonth(currentMonthIndex.value+1, currentYear.value))!;
-      print("else days : $days");
     }
-    print("print $days");
     itemCount.value = days;
     update();
-    print("itemkon ${itemCount.value}");
     return days;
   }
 
   DateTime? extractDate(String dateTimeString) {
-    if (dateTimeString != null && dateTimeString.isNotEmpty) {
+    if (dateTimeString.isNotEmpty) {
       DateTime dateTime = DateTime.parse(dateTimeString);
-      print("Extracted Date : ${DateTime(dateTime.year, dateTime.month, dateTime.day)}");
       return DateTime(dateTime.year, dateTime.month, dateTime.day);
     } else {
-      print("Extracted Date Error");
       return null;
     }
   }
@@ -231,7 +190,6 @@ class AttendanceController extends GetxController {
         'bulan': '$month'
       };
     }
-    print("reqBody = $reqBody");
     var response = await http.post(
         Uri.parse(urlPresensi),
         headers: {
@@ -240,60 +198,32 @@ class AttendanceController extends GetxController {
         },
         body:jsonEncode(reqBody!)
     );
-    // print("response : $response");
-    // jsonResponse['status'] == 200
-    print("response.statusCode : ${response.statusCode}");
+
     var jsonResponse = jsonDecode(response.body);
     if(response.statusCode==200){
       if (jsonResponse.containsKey("data")) {
         var data = jsonResponse["data"];
 
         if (data is List) {
-          // Clear the existing data before adding the new data
           presensi.clear();
-
-          // Add the new data to the presensi list
           presensi.addAll(data);
-
-          print("presensi.value on getAttendanceData(): ${presensi.value}");
         } else {
-          print("Invalid data format in the response.");
         }
       } else {
-        print("Missing 'data' key in the response.");
       }
     } else {
-      print("getAttendanceData() load data failed");
     }
-    print("presensi.value on getAttendanceData() : ${presensi.value}");
-    print("presensi on getAttendanceData() : ${presensi}");
 
   }
 
   final dateutil = DateUtilities();
-  // @override
-  // Future<void> onReady() async {
-  //   super.onReady();
-  //   shared = await SharedPreferences.getInstance();
-  //   token = shared!.getString('token');
-  //   print("ini token attendance $token");
-  //   // currentMonthDays(DateTime.now().month - 1, DateTime.now().year);
-  //   // print("itemCount.value onInit() : ${itemCount.value}");
-  //   // print("on init DateTime.now().month - 1, DateTime.now().year : ${DateTime.now().month - 1}, ${DateTime.now().year}");
-  //   // // print("${DateTime(year,month).day}");
-  //   // print("ini share preferences :$token");
-  //   // // print("${dateutil.}")
-  //   // print("on init DateTime.now().day.days.inDays : ${DateTime.now().day.days.inDays}");
-  //   // print("on init DateTime.now().day.days : ${DateTime.now().day.days}");
-  //   // print("on init DateTime.now().day : ${DateTime.now().day}");
-  //   //
-  //   // print("ini total ${dateutil.daysInMonth(DateTime.now().month - 1, DateTime.now().year)}");
-  //   update();
-  // }
 
   ScrollController? scroll(){
-    if(currentYear.value==DateTime.now().year&&currentMonthIndex.value+1==DateTime.now().month)return scrollController;
-    else return null;
+    if(currentYear.value==DateTime.now().year&&currentMonthIndex.value+1==DateTime.now().month) {
+      return scrollController;
+    } else {
+      return null;
+    }
   }
 
 }

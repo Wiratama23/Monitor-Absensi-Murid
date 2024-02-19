@@ -1,16 +1,14 @@
 import 'package:absensi_sd/screen/dashboard/components/drawerhead.dart';
 import 'package:absensi_sd/screen/dashboard/components/menuitems.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:absensi_sd/screen/dashboard/controller.dart';
-import 'dart:math' as math;
 
 import 'package:get/get.dart';
 
 
 class DrawerItem extends StatelessWidget {
-  DrawerItem({
+  DrawerItem({super.key,
     required this.controller
   });
 
@@ -30,7 +28,6 @@ class DrawerItem extends StatelessWidget {
                     nama: controller.data[0]['nama_siswa'] ?? "Unknown",
                   ),
             ),
-            // buildHeader(context),
             BuildMenuItems(
               title: "Attendance",
               icons: const Icon(Icons.calendar_month),

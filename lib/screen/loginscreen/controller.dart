@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -31,21 +30,11 @@ class LoginController extends GetxController {
       headers: {"Content-Type":"application/json"},
       body: jsonEncode(reqBody)
     );
-    // jsonResponse.containsKey('token')
-    // jsonResponse['status'] == 200
     Map<String, dynamic> jsonResponse = jsonDecode(response.body);
     if(response.statusCode == 200){
-      var token = jsonResponse['token'].toString();
-      print(response.statusCode);
       await shared?.setString('token', jsonResponse['token'].toString());
       getProfileData();
-      print("Token : $token");
-    } else {
-      print(response.statusCode);
-      // Get.offAndToNamed(Names.pageDashboard);
-      print("ape $jsonResponse");
     }
-
   }
   static const String urlSiswa="http://bersekolah.web.id:8002/m_api/profil_siswa";
   bool fetched = false;
@@ -55,11 +44,8 @@ class LoginController extends GetxController {
     fetched = false;
     shared = await SharedPreferences.getInstance();
     if(shared!.getString('token') != null){
-      // await shared?.setString('fetched', fetched.toString());
       getProfileData();
     }
-    print("ini share preferences(login) :$token");
-    // AttendanceController().getAttendanceData();
   }
 
   Future<void> getProfileData() async {
@@ -73,7 +59,6 @@ class LoginController extends GetxController {
           'Authorization':'Bearer $token'
         },
       );
-      // jsonResponse['status'] == 200
       var jsonResponse = jsonDecode(response.body);
       Map<String, dynamic> responseData = {
         "foto": jsonResponse['foto'],
@@ -83,21 +68,14 @@ class LoginController extends GetxController {
         "user_id": jsonResponse['user_id']
       };
       String jsonData = jsonEncode(responseData);
-      print("response ${response.statusCode}");
       await shared?.setString('user', jsonData);
-      print(jsonResponse);
       Get.offAndToNamed(Names.pageDashboard);
     }catch (e){
       shared!.remove('token');
-      print(e);
       var userid = shared!.getString('userid');
       var userpass = shared!.getString('userpass');
-      print("login otomatis");
       Login(userid!, userpass!);
     }
-    //nama = data['nama_siswa'];
-    //image = data['foto'];
-
   }
 
   void passObscure(bool? isSecures){
@@ -106,13 +84,7 @@ class LoginController extends GetxController {
     } else{
       isSecure.value=true;
     }
-    // return false;
-    print("isSecure : ${isSecure.value}");
-    print("obscureIcon : ${obscureIcon.value}");
   }
-
-
-
   @override
   Future<void> onClose() async {
     super.onClose();

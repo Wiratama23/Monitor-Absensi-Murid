@@ -1,4 +1,3 @@
-import 'package:absensi_sd/routes/routes_name.dart';
 import 'package:absensi_sd/screen/globalcomponents/build_button.dart';
 import 'package:absensi_sd/screen/globalcomponents/build_textfield.dart';
 import 'package:absensi_sd/screen/loginscreen/controller.dart';
@@ -34,7 +33,7 @@ class BuildForm extends StatelessWidget {
         const SizedBox(height: 10),
         const Text("Student ID"),
         BuildTextField(
-          hintText: "id",
+          hintText: "NISN",
           controller: controller.id,
           loginController: controller,
           suffixIcon: const Icon(Icons.person),
@@ -43,7 +42,7 @@ class BuildForm extends StatelessWidget {
         const Text("Password"),
         Obx(() =>
             BuildTextField(
-              hintText: "pass",
+              hintText: "Password",
               loginController: controller,
               controller: controller.pass,
               hide: controller.isSecure.value,
