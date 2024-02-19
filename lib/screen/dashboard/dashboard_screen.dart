@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:absensi_sd/dummyData.dart';
 import 'package:absensi_sd/routes/routes_name.dart';
 import 'package:absensi_sd/screen/attendances/controller.dart';
@@ -76,26 +78,28 @@ class DashboardSiswa extends GetView<DashboardController> {
               ),
             ),
             const SizedBox(height: 5),
-            DateTime.now().weekday<6 ? Obx(() =>
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Card(
-                  color: controller.color.value,
-                  child: Container(
-                    height: 80,
-                    child: Center(
-                      child:  ListTile(
-                        leading:Text(
-                          "${controller.days[DateTime.now().weekday-1]}, ${DateTime.now().day} ${controller.months[DateTime.now().month-1]} ${DateTime.now().year}",
-                          style: TextStyle(fontSize: 18),
+            Obx(
+              () => controller.isLoading.value == true ?
+              DateTime.now().weekday<6 ?
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Card(
+                    color: controller.color.value,
+                    child: Container(
+                      height: 80,
+                      child: Center(
+                        child:  ListTile(
+                          leading:Text(
+                            "${controller.days[DateTime.now().weekday-1]}, ${DateTime.now().day} ${controller.months[DateTime.now().month-1]} ${DateTime.now().year}",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          trailing: controller.widget.value,
                         ),
-                        trailing: controller.widget.value,
                       ),
                     ),
                   ),
-                ),
-              )
-            ):SizedBox(),
+              ):SizedBox() : const CircularProgressIndicator(),
+            ),
             const SizedBox(height: 20),
         //
             GestureDetector(

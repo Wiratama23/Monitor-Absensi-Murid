@@ -31,6 +31,7 @@ class DashboardController extends GetxController {
   RxString thisMonth="Januari".obs;
   RxInt present = 0.obs;
   RxInt daysInMonth = 0.obs;
+  RxBool isLoading = false.obs;
 
   List<String> days = [];
   List<String> months = [];
@@ -79,6 +80,7 @@ class DashboardController extends GetxController {
     print(days);
     print(months);
     print("status on dashboard : $status");
+    isLoading.value = true;
   }
 
   void countPresent(){
@@ -113,7 +115,14 @@ class DashboardController extends GetxController {
         shared!.remove('token');
         shared!.remove('userid');
         shared!.remove('userpass');
-        Get.offAndToNamed(Names.pageLogin);
+        Get.offAllNamed(Names.pageLogin);
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    super.onClose();
+    isLoading.value = false;
   }
   // @override
   // void onReady() {

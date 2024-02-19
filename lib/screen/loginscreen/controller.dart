@@ -12,7 +12,7 @@ class LoginController extends GetxController {
   var token;
   bool userlog = false;
 
-  final bool isSecure = true;
+  RxBool isSecure = true.obs;
   late Size mediaSize;
   static const String url="http://bersekolah.web.id/m_api/login_siswa";
 
@@ -97,6 +97,15 @@ class LoginController extends GetxController {
     //nama = data['nama_siswa'];
     //image = data['foto'];
 
+  }
+
+  void passObscure(){
+    if(isSecure.value){
+      isSecure.value=false;
+    } else{
+      isSecure.value=true;
+    }
+    print("isSecure : $isSecure");
   }
 
   @override
