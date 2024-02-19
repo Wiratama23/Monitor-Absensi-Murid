@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +12,7 @@ class LoginController extends GetxController {
   SharedPreferences? shared;
   var token;
   bool userlog = false;
-
+  Rx<IconData> obscureIcon = Icons.visibility_off.obs;
   RxBool isSecure = true.obs;
   late Size mediaSize;
   static const String url="http://bersekolah.web.id/m_api/login_siswa";
@@ -99,14 +100,18 @@ class LoginController extends GetxController {
 
   }
 
-  void passObscure(){
-    if(isSecure.value){
+  void passObscure(bool? isSecures){
+    if(isSecures!){
       isSecure.value=false;
     } else{
       isSecure.value=true;
     }
-    print("isSecure : $isSecure");
+    // return false;
+    print("isSecure : ${isSecure.value}");
+    print("obscureIcon : ${obscureIcon.value}");
   }
+
+
 
   @override
   Future<void> onClose() async {

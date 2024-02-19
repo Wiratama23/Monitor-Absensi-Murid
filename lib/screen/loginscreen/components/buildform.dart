@@ -36,18 +36,19 @@ class BuildForm extends StatelessWidget {
         BuildTextField(
           hintText: "id",
           controller: controller.id,
+          loginController: controller,
           suffixIcon: const Icon(Icons.person),
         ),
         const SizedBox(height: 40),
         const Text("Password"),
-        // Obx(() =>
+        Obx(() =>
             BuildTextField(
               hintText: "pass",
-              // obsecureText: controller.isSecure.value,
+              loginController: controller,
               controller: controller.pass,
-              suffixIcon: const Icon(Icons.remove_red_eye),
+              hide: controller.isSecure.value,
             ),
-        // ),
+        ),
         const SizedBox(height: 40),
         BuildButton(
             text: "Login",

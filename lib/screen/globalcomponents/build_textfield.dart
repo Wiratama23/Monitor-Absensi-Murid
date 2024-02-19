@@ -9,33 +9,38 @@ class BuildTextField extends StatelessWidget {
     // this.obsecureText = false,
     this.controller,
     this.suffixIcon,
+    this.hide,
+    this.loginController
   }) : super(key: key);
 
   final String hintText;
   // bool obsecureText;
   final TextEditingController? controller;
   final Widget? suffixIcon;
+  bool? hide;
 
-  LoginController loginController = LoginController();
+
+  LoginController? loginController ;
 
   @override
   Widget build(BuildContext context) {
     return
-      Obx(() =>
           TextField(
             controller: controller,
-            obscureText: loginController.isSecure.value,
+            obscureText: loginController!.isSecure.value,
             decoration: InputDecoration(
               suffixIcon: hintText == "pass" ? IconButton(
-                  onPressed: () => loginController.passObscure(),
-                  icon: suffixIcon!) : suffixIcon, //suffixIcon,
+                  onPressed: () {
+                    loginController!.passObscure(hide);
+                  },
+                  icon: hide! ? const Icon(Icons.visibility_off): const Icon(Icons.visibility)) : suffixIcon, //suffixIcon,
               hintText: hintText,
               hintStyle: const TextStyle(
                   color: Colors.grey,
                   fontSize: 14.5
               ),
             ),
-          )
-      );
+          );
+
   }
 }
