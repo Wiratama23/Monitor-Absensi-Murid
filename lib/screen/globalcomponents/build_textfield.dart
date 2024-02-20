@@ -20,9 +20,9 @@ class BuildTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return
       TextField(
-        keyboardType: hintText=="NISN"?TextInputType.visiblePassword:null,
+        keyboardType: null,
         controller: controller,
-        obscureText: hintText=="id"?false:loginController!.isSecure.value,
+        obscureText: hintText=="Password"?loginController!.isSecure.value:false,
         decoration: InputDecoration(
           suffixIcon: hintText == "Password" ? IconButton(
               onPressed: () {

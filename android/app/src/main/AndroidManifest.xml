@@ -4,7 +4,7 @@
     <application
         android:label="SDN 02 Beji"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/beji02">
         <activity
             android:name=".MainActivity"
             android:exported="true"
