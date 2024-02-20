@@ -1,4 +1,5 @@
 class Names{
   static const pageLogin = '/login';
-  static const pageAbsen = '/absen';
+  static const pageDashboard = '/dashboard';
+  static const pageAttendance = '/attendance';
 }
